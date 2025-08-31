@@ -2,9 +2,9 @@
 
 Utilities and scripts for building and analysing Rumantsch datasets for **pretraining** and **SFT** (supervised fine‑tuning).  
 The repo includes helpers to convert data to chat formats, create Hugging Face datasets, compute token statistics, and generate/score synthetic SFT pairs.
----
 
-## 📁Repository structure
+---
+## Repository structure
 
 ```
 Swiss-AI_Rumansh_Scripts/
