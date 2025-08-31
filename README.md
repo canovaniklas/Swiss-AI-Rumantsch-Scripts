@@ -1,20 +1,16 @@
 # Swiss-AI_Rumansh_Scripts
 
-Utilities and scripts for building and analyzing Rumantsch (Romansh) datasets for **pretraining** and **SFT** (supervised fine‑tuning).  
+Utilities and scripts for building and analysing Rumantsch datasets for **pretraining** and **SFT** (supervised fine‑tuning).  
 The repo includes helpers to convert data to chat formats, create Hugging Face datasets, compute token statistics, and generate/score synthetic SFT pairs.
-
-> Works on macOS, Linux, and Windows (PowerShell). Python 3.9+ recommended.
-
 ---
 
-## 📁 Repository structure
+## 📁Repository structure
 
 ```
 Swiss-AI_Rumansh_Scripts/
 ├─ Human_SFT_Scripts/
 │  ├─ convert_to_chat_format.py
 │  ├─ create_hf_dataset.py
-│  └─ (more human-created SFT utilities)
 ├─ Pretraining_Scripts/
 │  ├─ jsonl_reader.py
 │  ├─ token_stats_calculator.py
@@ -27,21 +23,15 @@ Swiss-AI_Rumansh_Scripts/
 │  └─ translation_sft_RG.py
 ├─ requirements.txt
 ├─ .gitignore
-└─ (optional) helper tools for commit timestamp randomization:
-   ├─ randomize_commits.py / randomize_commits_safe.py
-   └─ make_empty_commits.py
 ```
-
-> **Note:** The exact CLI options for each script can be viewed with `-h` / `--help`. Examples below show typical usage patterns based on common conventions.
-
 ---
 
-## 🚀 Quick start (step‑by‑step)
+## Quick start (step‑by‑step)
 
 ### 1) Clone or create the repo locally
 ```bash
 # If you already created the GitHub repo:
-git clone https://github.com/<your-username>/Swiss-AI_Rumansh_Scripts.git
+git clone https://github.com/canovaniklas/Swiss-AI_Rumansh_Scripts.git
 cd Swiss-AI_Rumansh_Scripts
 ```
 
@@ -63,7 +53,7 @@ source venv/bin/activate
 ```
 
 ### 3) Install Python dependencies
-You can install from the provided requirements file **or** directly from the list.
+You can install them from the provided requirements file **or** directly from the list.
 
 ```bash
 # Using requirements.txt
@@ -106,7 +96,7 @@ python -c "import torch, datasets, transformers, pandas, nltk; print('OK')"
 
 ---
 
-## 🧭 Typical workflows
+##  Typical workflows
 
 ### A) Convert raw data to chat format (human SFT prep)
 Target: Convert JSON/JSONL or other structure into a chat-style format for SFT.
@@ -191,11 +181,11 @@ python Synthetic_SFT_Scripts/translation_sft_RG.py -h
 
 ---
 
-## 📦 Data layout tips
+##  Data layout tips
 
 - Prefer **JSONL** (one JSON object per line) for large corpora.  
 - Keep raw sources under `data/raw/` and derived artifacts under `data/processed/`.  
-- Use stable field names like `{"text": "...", "lang": "rm", "meta": {...}}` for pretraining, and chat-style fields like:
+- Use stable field names like `{"text": "...", "lang": "roh", "meta": {...}}` for pretraining, and chat-style fields like:
   ```json
   {"messages":[
     {"role":"system","content":"..."},
@@ -204,76 +194,9 @@ python Synthetic_SFT_Scripts/translation_sft_RG.py -h
   ]}
   ```
 
----
 
-## 🛠️ Git & GitHub
-
-### Track housekeeping files
-```bash
-git add .gitignore requirements.txt
-git commit -m "chore: add .gitignore and requirements"
-git push origin main
-```
-
-### (Optional) Randomized commit timestamps (Swiss working hours)
-If present in your repo, these helpers create believable history between **2025‑06‑01** and **2025‑09‑30** (Mon–Fri, 08:00–18:30, random minutes/seconds):
-
-**File-by-file commits at random times**
-```bash
-python randomize_commits.py --shuffle Human_SFT_Scripts Pretraining_Scripts Synthetic_SFT_Scripts
-# Safer variant with verbose diagnostics:
-# python randomize_commits_safe.py --shuffle Human_SFT_Scripts Pretraining_Scripts Synthetic_SFT_Scripts
-```
-
-**Empty commits with natural messages**
-```bash
-python make_empty_commits.py             # 15 commits
-python make_empty_commits.py 30          # any number you like
-```
-
-### Undoing pushed commits
-- **You only use the repo** → rewrite history:
-  ```bash
-  git reset --hard HEAD~N
-  git push --force origin main
-  ```
-- **Shared/public repo** → keep history, add inverse commits:
-  ```bash
-  git revert --no-edit HEAD~N..HEAD
-  git push origin main
-  ```
-
----
-
-## 🧪 Troubleshooting
-
-- **`ModuleNotFoundError`** → Did you activate the venv and run `pip install -r requirements.txt`?
-- **`torch` install issues** → Try a clean venv; if using GPU, follow the official PyTorch command for your platform.
-- **`datasets` mmap errors** → If you use `load_from_disk`, ensure the path exists and the dataset versions match.
-- **OpenAI key errors** → Set `OPENAI_API_KEY` and keep usage within rate limits.
-- **Git commit script errors** → Ensure the target directories are **inside** the repository root. Run the safer helper for detailed diagnostics.
-
----
-
-## 📝 Conventions
-
-- Use **snake_case** for Python files and keep functions pure where possible.
-- Prefer **JSONL** for large corpora; keep metadata small and consistent.
-- Add a small `--sample`/`--head` flag to scripts that preview output before full runs.
-- Guard main entrypoints with:
-  ```python
-  if __name__ == "__main__":
-      ...
-  ```
-
----
-
-## 📄 License
+##  License
 
 Add your preferred license (e.g., MIT).
 
 ---
-
-## 🙌 Acknowledgements
-
-Built to support Rumantsch (Romansh) NLP workflows across pretraining and SFT.
