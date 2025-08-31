@@ -35,12 +35,6 @@ git clone https://github.com/canovaniklas/Swiss-AI_Rumansh_Scripts.git
 cd Swiss-AI_Rumansh_Scripts
 ```
 
-If you’re starting locally and will push later:
-```bash
-mkdir Swiss-AI_Rumansh_Scripts && cd Swiss-AI_Rumansh_Scripts
-git init -b main
-```
-
 ### 2) Create and activate a virtual environment
 ```bash
 # macOS/Linux
@@ -53,17 +47,12 @@ source venv/bin/activate
 ```
 
 ### 3) Install Python dependencies
-You can install them from the provided requirements file **or** directly from the list.
+You can install them from the provided requirements file 
 
 ```bash
 # Using requirements.txt
 pip install -r requirements.txt
 
-# OR install the main libs explicitly
-pip install datasets tqdm transformers pandas matplotlib nltk torch sentence-transformers openai
-```
-
-> If you’re on Apple Silicon and want GPU acceleration, consult the PyTorch website for the latest install command. CPU-only works out of the box.
 
 ### 4) (Optional) Prepare NLTK data
 If any scripts use NLTK tokenizers, download common packages once:
@@ -125,7 +114,7 @@ python Human_SFT_Scripts/create_hf_dataset.py \
 ```
 
 ### C) Universal JSONL builder (pretraining)
-Aggregate multiple sources into a unified JSONL for pretraining.
+Aggregate multiple data files into a unified gunzipped JSONL file for pretraining.
 
 ```bash
 python Pretraining_Scripts/universal_jsonl_builder.py -h
@@ -147,7 +136,7 @@ python Pretraining_Scripts/jsonl_reader.py \
   --head 5
 ```
 
-### E) Token statistics (lengths, distribution, vocab estimates)
+### E) Token statistics 
 ```bash
 python Pretraining_Scripts/token_stats_calculator.py -h
 
@@ -196,7 +185,7 @@ python Synthetic_SFT_Scripts/translation_sft_RG.py -h
 
 
 ##  License
+This project is licensed under the Apache License 2.0 – see the [LICENSE](./LICENSE) file for details.
 
-Add your preferred license (e.g., MIT).
 
 ---
