@@ -12,6 +12,7 @@ Swiss-AI_Rumansh_Scripts/
 │  ├─ convert_to_chat_format.py
 │  ├─ create_hf_dataset.py
 ├─ Pretraining_Scripts/
+│  ├─ interleave_jsonl_bilingual.py
 │  ├─ jsonl_reader.py
 │  ├─ token_stats_calculator.py
 │  └─ universal_jsonl_builder.py
@@ -112,21 +113,29 @@ python Human_SFT_Scripts/create_hf_dataset.py \
   --repo-id your-hf-username/rumantsch-sft \
   --push-to-hub
 ```
-
 ### C) Universal JSONL builder (pretraining)
-Aggregate multiple data files into a unified gunzipped JSONL file for pretraining.
-
+Aggregate multiple data files into a unified gunzipped JSONL file for pertaining.
 ```bash
 python Pretraining_Scripts/universal_jsonl_builder.py -h
 
 # Example pattern
 python Pretraining_Scripts/universal_jsonl_builder.py \
-  --sources data/corpus1/*.jsonl data/corpus2/*.jsonl \
-  --output data/pretrain_corpus.jsonl \
-  --shuffle
+  --type json \
+  --src data/corpus1/*.jsonl data/corpus2/*.jsonl \
+  --out data/pretrain_corpus.jsonl.gz
 ```
+### D) Interleaver for aligned translations
+Create a gunzipped JSONL file with paragraph-by-paragraph interleavings of aligned translations.
+```bash
+python Pretraining_Scripts/interleave_jsonl_bilingual.py -h
 
-### D) Quick JSONL inspection
+# Example pattern
+python Pretraining_Scripts/interleave_jsonl_bilingual.py \
+  --src data/pretrain_corpus.jsonl.gz \
+  --out data/interleaved_roh_de.jsonl.gz
+
+```
+### E) Quick JSONL inspection
 ```bash
 python Pretraining_Scripts/jsonl_reader.py -h
 
@@ -136,7 +145,7 @@ python Pretraining_Scripts/jsonl_reader.py \
   --head 5
 ```
 
-### E) Token statistics 
+### F) Token statistics 
 ```bash
 python Pretraining_Scripts/token_stats_calculator.py -h
 
@@ -148,7 +157,7 @@ python Pretraining_Scripts/token_stats_calculator.py \
   --report out/token_stats.md
 ```
 
-### F) Synthetic SFT generation & scoring
+### G) Synthetic SFT generation & scoring
 > The following scripts help create and assess synthetic pairs (prompt/response, translations, idioms, etc.). Check `-h` for exact parameters.
 
 ```bash
